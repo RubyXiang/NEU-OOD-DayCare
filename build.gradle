@@ -1,0 +1,69 @@
+plugins {
+    id 'java'
+    id 'application'
+    id "edu.sc.seis.macAppBundle" version "2.3.0"
+    id 'edu.sc.seis.launch4j' version '2.4.6'
+}
+
+group 'edu.neu.csye6200'
+version '0.1.4'
+
+application {
+    mainClassName = "edu.neu.csye6200.Application"
+}
+launch4j {
+    mainClassName = "edu.neu.csye6200.Application"
+    icon = "${projectDir}/src/main/resources/icons/app-icon.ico" // from https://www.iconfinder.com/iconsets/book_mac, license 'Free for non commercial use'
+}
+macAppBundle {
+    mainClassName = "edu.neu.csye6200.Application"
+    icon = "${projectDir}/src/main/resources/icons/app-icon.icns"
+}
+javadoc {
+    source = sourceSets.main.allJava
+    classpath = configurations.compile
+    destinationDir = new File("${projectDir}/docs")
+    options.author(true)
+    options.version(true)
+    options.linkSource(true)
+    options.addStringOption('XDignore.symbol.file', '-private')
+}
+repositories {
+    mavenCentral()
+    flatDir {
+        dirs 'libs'
+    }
+}
+
+dependencies {
+    // Test
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+
+    // UI
+    compile group: 'com.formdev', name: 'flatlaf', version: '0.40'
+    compile group: 'com.formdev', name: 'flatlaf-swingx', version: '0.40'
+    compile group: 'org.swinglabs.swingx', name: 'swingx-all', version: '1.6.5-1'
+    compile group: 'org.jfree', name: 'jfreechart', version: '1.5.0'
+
+    // Database
+    compile group: 'org.jdbi', name: 'jdbi3-sqlite', version: '3.14.1'
+    compile group: 'org.jdbi', name: 'jdbi3-core', version: '3.14.1'
+    compile group: 'org.jdbi', name: 'jdbi3-sqlobject', version: '3.14.1'
+    compile 'org.xerial:sqlite-jdbc:3.32.3.2'
+
+    // Helper
+    compile("com.google.guava:guava:29.0-jre")
+
+    // CLI
+    compile group: 'commons-cli', name: 'commons-cli', version: '1.4'
+
+    // Logging
+    compile group: 'org.slf4j', name: 'slf4j-api', version: '1.7.25'
+    compile group: 'org.apache.logging.log4j', name: 'log4j-api', version: '2.13.3'
+    compile group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.13.3'
+    compile group: 'org.apache.logging.log4j', name: 'log4j-slf4j-impl', version: '2.13.3'
+
+    // Code Analysis
+    compile group: 'com.google.code.findbugs', name: 'jsr305', version: '3.0.2'
+
+}
